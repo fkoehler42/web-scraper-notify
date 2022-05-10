@@ -1,13 +1,14 @@
 {
-  "name": "typescript-cli-starter",
+  "name": "web-scraper-notify",
   "private": true,
-  "version": "1.0.0",
-  "description": "A simple and zero-opinion typescript starter template for building cross-platform command line applications.",
-  "author": "Khalid Zoabi <kzoabi@outlook.com>",
+  "version": "0.1.0",
+  "description": "A cross-platform executable that scrap some data on targeted websites and send them through desktop notifications.",
+  "author": "Flavien Koehler <koehler.flavien@gmail.com>",
   "keywords": [
     "typescript",
     "cli",
-    "starter"
+    "scraper",
+    "notification"
   ],
   "license": "MIT",
   "main": "./dist/index.js",
@@ -20,7 +21,7 @@
     "dev": "ts-node ./src/cli.ts",
     "clean": "rm -rf ./dist/ ./exec/",
     "lint": "eslint . --ext .ts",
-    "test": "yarn lint && yarn build && ava --verbose",
+    "test": "yarn lint && yarn build",
     "build": "yarn clean && tsc",
     "bundle": "yarn build && pkg . --out-dir ./exec/"
   },
