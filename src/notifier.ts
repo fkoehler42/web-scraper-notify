@@ -1,12 +1,32 @@
-import notifier from 'node-notifier';
+import notifier, { NotificationCenter } from 'node-notifier';
+import path from 'path';
 
-const notify = (title, message) => {
-    console.log(message);
-    notifier.notify({ title, message }, (err) => {
-        if (err) {
-            console.log('Error', err);
-        }
+interface NodeProcessPkg extends NodeJS.Process {
+    pkg: unknown;
+}
+
+let Notifier = null;
+const IS_DEV = !(process as NodeProcessPkg).pkg;
+
+if (IS_DEV) {
+    Notifier = notifier;
+} else if (process.platform === 'darwin') {
+    Notifier = new NotificationCenter({
+        customPath: path.join(path.dirname(process.execPath), 'notifier', 'terminal-notifier'),
     });
-};
+} else {
+    throw new Error(`Notifier not supported on your platform: ${process.platform}`);
+}
+
+const notify = (title, message) => (
+    new Promise<void>((resolve, reject) => {
+        Notifier.notify({ title, message }, (err) => {
+            if (err) {
+                return reject(err);
+            }
+            return resolve();
+        });
+    })
+);
 
 export default notify;

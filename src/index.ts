@@ -7,7 +7,7 @@ const main = async () => {
         data,
     } = await scrapeData();
 
-    notify(title, data);
+    await notify(title, data);
 };
 
 export default main;
