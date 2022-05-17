@@ -27,8 +27,8 @@ If you have any clues about this issue please reach out to me! Thanks
 
 ### Windows
 
-Not supported yet (WIP).
+Windows notification method uses Snoretoast under the hood. As they state on their [repository](https://github.com/KDE/snoretoast), a start menu shortcut to `SnoreToast.exe` will be created and the notifications will be assigned to it if no application ID has been set, which we've not implemented at this point.
 
 ### Linux
 
-Not supported yet.
+Not supported yet (WIP).

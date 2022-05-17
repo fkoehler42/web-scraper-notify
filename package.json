@@ -23,7 +23,8 @@
     "lint": "eslint . --ext .ts",
     "test": "yarn lint && yarn build",
     "build": "yarn clean && tsc",
-    "bundle:mac": "yarn build && ./scripts/mac-include-notifier.sh && pkg . -t macos --out-dir ./exec/"
+    "bundle:mac": "yarn build && ./scripts/mac-include-notifier.sh && pkg . -t macos --out-dir ./exec/",
+    "bundle:win": "yarn build && ./scripts/win-include-notifier.sh && pkg . -t win --out-dir ./exec/"
   },
   "devDependencies": {
     "@types/node": "14",
