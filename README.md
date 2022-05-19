@@ -11,10 +11,12 @@ This project uses yarn as the package manager. Follow [this guide](https://class
 - `yarn lint` to run eslint and transpile the source code into JavaScript.
 - `yarn build` to transpile the source code into JavaScript.
 - `yarn bundle:mac` to package the CLI into a standalone executable for MacOS.
+- `yarn bundle:win` to package the CLI into a standalone executable for Windows.
+- `yarn bundle:linux` to package the CLI into a standalone executable for Linux.
 
 ## Usage
 
-The final executable is shipped along with a `notifier` directory that include the necessary files to send a desktop notification, depending on your operating system. These files must remain at the same place.
+On Windows and MacOS, the final executable is shipped along with a `notifier` directory that include the necessary files to send a desktop notification. These files must remain at the same place relative to the executable.
 
 You can run the executable whenever you want to get the data from the targeted websites. Feel free to add it to your list of startup programs or to make it a cron job for instance.
 
