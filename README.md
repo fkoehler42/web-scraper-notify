@@ -31,4 +31,5 @@ Windows notification method uses Snoretoast under the hood. As they state on the
 
 ### Linux
 
-Not supported yet (WIP).
+Linux/BSD systems rely on `notify-send` program. It is not shipped with web-scraper-notify executable so it's on you to check if it's installed on your system and to do so if not.
+Note: Popular user friendly distributions like Ubuntu include it by default.

@@ -1,5 +1,6 @@
 import notifier, {
     NotificationCenter,
+    NotifySend,
     WindowsToaster,
 } from 'node-notifier';
 import path from 'path';
@@ -22,7 +23,10 @@ if (IS_DEV) {
         customPath: path.join(path.dirname(process.execPath), 'notifier', 'snoretoast-x64.exe'),
     });
 } else {
-    throw new Error(`Notifier not supported on your platform: ${process.platform}`);
+    // NotifySend internally check if the current system is supported (Linux/BSD)
+    // and if `notify-send` is installed. An error is returned
+    // in the `notify` callback if one these conditions is not met
+    Notifier = new NotifySend();
 }
 
 const notify = (title, message) => (
