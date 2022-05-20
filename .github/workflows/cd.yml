@@ -1,0 +1,54 @@
+name: CD
+
+on:
+  push:
+    tags:
+      - v*.*.*
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  Release:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Setup Node
+      uses: actions/setup-node@v3
+      with:
+        node-version: '14.x'
+
+    - uses: c-hive/gha-yarn-cache@v2
+
+    - name: Install dependencies
+      run: yarn
+
+    - name: Bundle
+      run: yarn bundle
+
+    - name: Set build version
+      run: echo BUILD_VERSION=$(echo ${{ github.ref }} | sed 's/refs\/tags\/v//') >> $GITHUB_ENV
+
+    - name: Set bundle common name
+      run: echo ARCHIVE_NAME=$(echo Web-Scraper-Notify-$BUILD_VERSION) >> $GITHUB_ENV
+
+    - name: Zip MacOS bundle
+      run: 7z a -tzip "../../$(echo $ARCHIVE_NAME-macOS.zip)"
+      working-directory: bin/mac
+
+    - name: Zip Windows bundle
+      run: 7z a -tzip "../../$(echo $ARCHIVE_NAME-windows.zip)"
+      working-directory: bin/win
+
+    - name: Zip Linux bundle
+      run: 7z a -tzip "../../$(echo $ARCHIVE_NAME-linux.zip)"
+      working-directory: bin/linux
+
+    - name: Create Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: ${{ env.ARCHIVE_NAME}}*.zip
