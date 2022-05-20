@@ -8,7 +8,9 @@ This project uses yarn as the package manager. Follow [this guide](https://class
 
 - `yarn` (`yarn install`) to install the project dependencies.
 - `yarn dev` to run the cli from the source files.
-- `yarn lint` to run eslint and transpile the source code into JavaScript.
+- `yarn clean` to delete build and bundle files.
+- `yarn lint` to run eslint on source files.
+- `yarn test` to run eslint and transpile the source code into JavaScript.
 - `yarn build` to transpile the source code into JavaScript.
 - `yarn bundle` to package the CLI into a standalone executable for each platform.
 - `yarn bundle:mac` to package the CLI into a standalone executable for MacOS.
