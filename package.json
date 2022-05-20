@@ -1,7 +1,7 @@
 {
   "name": "web-scraper-notify",
   "private": true,
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "A cross-platform executable that scrap some data on targeted websites and send them through desktop notifications.",
   "author": "Flavien Koehler <koehler.flavien@gmail.com>",
   "keywords": [
