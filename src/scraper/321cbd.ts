@@ -1,5 +1,7 @@
 import scrapeIt from 'scrape-it';
+import { setStoreItem } from '../store';
 
+const ID = '321CBD';
 const URL = 'https://www.321cbd.com/fr';
 
 interface Data {
@@ -24,8 +26,9 @@ const scrapeData = async () => {
         message = data.discountBanner;
     }
 
+    setStoreItem(ID, { message });
     return {
-        title: '321CBD',
+        title: ID,
         data: message,
     };
 };

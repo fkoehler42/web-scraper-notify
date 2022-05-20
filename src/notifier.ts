@@ -3,16 +3,13 @@ import notifier, {
     NotifySend,
     WindowsToaster,
 } from 'node-notifier';
+import { isDev } from './utils';
 import path from 'path';
 
-interface NodeProcessPkg extends NodeJS.Process {
-    pkg: unknown;
-}
 
 let Notifier = null;
-const IS_DEV = !(process as NodeProcessPkg).pkg;
 
-if (IS_DEV) {
+if (isDev) {
     Notifier = notifier;
 } else if (process.platform === 'darwin') {
     Notifier = new NotificationCenter({
