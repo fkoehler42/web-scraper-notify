@@ -1,6 +1,6 @@
 # Ignore generated directories
 dist/
-exec/
+bin/
 
 # Logs
 logs

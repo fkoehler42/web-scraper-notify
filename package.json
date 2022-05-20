@@ -19,13 +19,14 @@
   ],
   "scripts": {
     "dev": "ts-node ./src/cli.ts",
-    "clean": "rm -rf ./dist/ ./exec/",
+    "clean": "rm -rf ./dist/ ./bin/",
     "lint": "eslint . --ext .ts",
-    "test": "yarn lint && yarn build",
     "build": "yarn clean && tsc",
-    "bundle:mac": "yarn build && ./scripts/mac-include-notifier.sh && pkg . -t macos --out-dir ./exec/",
-    "bundle:win": "yarn build && ./scripts/win-include-notifier.sh && pkg . -t win --out-dir ./exec/",
-    "bundle:linux": "yarn build && pkg . -t linux --out-dir ./exec/"
+    "test": "yarn lint && yarn build",
+    "bundle": "yarn build && ./scripts/mac-include-notifier.sh && ./scripts/win-include-notifier.sh && pkg . -t macos --out-dir ./bin/mac/ && pkg . -t win --out-dir ./bin/win && pkg . -t linux --out-dir ./bin/linux/",
+    "bundle:mac": "yarn build && ./scripts/mac-include-notifier.sh && pkg . -t macos --out-dir ./bin/mac/",
+    "bundle:win": "yarn build && ./scripts/win-include-notifier.sh && pkg . -t win --out-dir ./bin/win",
+    "bundle:linux": "yarn build && pkg . -t linux --out-dir ./bin/linux/"
   },
   "devDependencies": {
     "@types/node": "14",
