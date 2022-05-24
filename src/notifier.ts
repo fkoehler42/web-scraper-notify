@@ -1,3 +1,4 @@
+import open from 'open';
 import notifier, {
     NotificationCenter,
     NotifySend,
@@ -5,8 +6,13 @@ import notifier, {
 } from 'node-notifier';
 import { isDev } from './utils';
 import path from 'path';
+import {
+    getStoreItem,
+    setStoreItem,
+} from './store';
 
 
+const suspendLabel = 'Suspend until content change';
 let Notifier = null;
 
 if (isDev) {
@@ -26,15 +32,65 @@ if (isDev) {
     Notifier = new NotifySend();
 }
 
-const notify = (title, message) => (
-    new Promise<void>((resolve, reject) => {
-        Notifier.notify({ title, message }, (err) => {
+const notify = async (id, data, url) => {
+    const storedItem = await getStoreItem(id);
+
+    if (storedItem && storedItem.suspended && data === storedItem.message) {
+        return;
+    }
+
+    return new Promise<void>((resolve, reject) => {
+        // Windows specific behavior relies on actions listeners
+        if (process.platform !== 'darwin') {
+            const saveDataNoSuspend = () => {
+                setStoreItem(id, {
+                    message: data,
+                    suspended: false,
+                });
+                Notifier.removeAllListeners();
+
+                return resolve();
+            };
+
+            Notifier.once('timeout', saveDataNoSuspend);
+            Notifier.once('dismissed', saveDataNoSuspend);
+            Notifier.once('click', () => {
+                open(url);
+                saveDataNoSuspend();
+            });
+            Notifier.once(suspendLabel.toLowerCase(), () => {
+                setStoreItem(id, {
+                    message: data,
+                    suspended: true,
+                });
+                Notifier.removeAllListeners();
+
+                return resolve();
+            });
+        }
+
+        Notifier.notify({
+            title: id,
+            message: data,
+            open: url,
+            actions: [suspendLabel],
+            closeLabel: 'Close',
+            wait: true,
+            timeout: 10,
+        }, (err, response, metadata) => {
             if (err) {
                 return reject(err);
             }
-            return resolve();
+            if (process.platform === 'darwin') {
+                setStoreItem(id, {
+                    message: data,
+                    suspended: !!(metadata.activationValue === suspendLabel),
+                });
+
+                return resolve();
+            }
         });
-    })
-);
+    });
+};
 
 export default notify;

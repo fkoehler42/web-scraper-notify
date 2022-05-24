@@ -8,10 +8,11 @@ import {
 const main = async () => {
     initStore();
     const {
-        title,
+        id,
         data,
+        url,
     } = await scrapeData();
-    await notify(title, data);
+    await notify(id, data, url);
     await saveStore();
 };
 
