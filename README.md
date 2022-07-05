@@ -22,6 +22,9 @@ On Windows and MacOS, the final executable is shipped along with a `notifier` di
 
 You can run the executable whenever you want to get the data from the targeted websites. Feel free to add it to your list of startup programs or to make it a cron job for instance.
 
+The program stores the latest data fetched so if you click on "Suspend until content change" button on the notification, you won't receive any further notifications until the data from the website changes.
+Unfortunately this feature doesn't work on Linux for now. You can also click on the notification itself to get redirected to the URL from where the data is fetched.
+
 ### MacOS
 
 The first time you run the CLI, you may see a request popup to allow notifications. If you miss it and don't receive any further notifications, go to *System Preferences > Notifications & Focus* and locate `terminal-notifier` in the list of programs to allow notifications.
@@ -35,5 +38,5 @@ Windows notification method uses Snoretoast under the hood. As they state on the
 
 ### Linux
 
-Linux/BSD systems rely on `notify-send` program. It is not shipped with web-scraper-notify executable so it's on you to check if it's installed on your system and to do so if not.
-Note: Popular user friendly distributions like Ubuntu include it by default.
+Linux/BSD systems rely on `notify-send` executable. It is not shipped with web-scraper-notify executable so it's on you to install it on your system. It's available under `libnotify-bin` package.
+Note: Ubuntu includes it by default.
